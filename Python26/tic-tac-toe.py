@@ -1,9 +1,13 @@
+import random
+
 human = 'O'
 computer = 'X'
 
-board_screen = ' 0 | 1 | 2\n 3 | 4 | 5\n 6 | 7 | 8\n'
+board_screen = ' 0 | 1 | 2\n 3 | 4 | 5\n 6 | 7 | 8'
 
 board = [" "] * 9
+
+board_blank = {0,1,2,3,4,5,6,7,8}
 
 win_status = [(0,1,2),(3,4,5),(6,7,8),
               (0,3,6),(1,4,7),(2,5,8),
@@ -22,9 +26,13 @@ def is_win(turn):
     return False
 
 def computer_num():
-    for i in range(len(board)):
-        if board[i] == " ":
-            return i
+    # for i in range(len(board)):
+    #     if board[i] == " ":
+    #         return i
+
+    if board_blank:
+        return random.choice(list(board_blank))
+
     return -1
 
 def update_game(number,who):
@@ -32,23 +40,25 @@ def update_game(number,who):
     global board
     board[number] = who
     board_screen = board_screen.replace(str(number),who)
+    board_blank.discard(number)
 
 show_board()
 
 while True:
-    human_input = int(input('숫자를 입력하세요'))
+    human_input = int(input('>> 숫자를 입력하세요:'))
     update_game(human_input,human)
     show_board()
     if is_win(human): 
         print('You win ~~~~~~~~~!')
         break
-    print('컴퓨터 차례입니다')
+    print('>> 컴퓨터 차례입니다')
     computer_input = computer_num()
     if computer_input == -1:
         show_board()
         print("The game ended in a tie ~~~~~~~~~!")
         break
     update_game(computer_input,computer)
+    print(">> 컴퓨터의 선택:",computer_input)
     show_board()
     if is_win(computer): 
         print('You loose ~~~~~~~~~!')
