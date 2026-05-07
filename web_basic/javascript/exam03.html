@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let num = prompt('정수입력해라')
+        console.log(num,typeof num)
+        num = Number(num)
+        console.log(num,typeof num)
+
+        if(num % 2 == 0){
+            console.log(num+ ':짝수')
+        }else{
+            console.log(num+ ':홀수')
+        }
+
+        switch(num%2){
+            case 0: 
+                console.log(num+ ':짝수')
+                break
+            default : console.log(num+ ':홀수')
+        }
+
+        let msg = num%2 == 0 ? '짝수':'홀수'
+        console.log(num + ':' + msg)
+        console.log(`${num}:${msg}`)
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
