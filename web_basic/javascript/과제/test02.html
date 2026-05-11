@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        var start = Number(prompt("시작단 : "));
+        var end = Number(prompt("종료단 : "));
+
+        while (end < start) {
+            end = Number(prompt("종료단 : "));
+        }
+
+        for (var i = start; i <= end; i++) {
+            document.write("*** " + i + "단 ***<br>");
+            for (var j = 1; j <= 9; j++) {
+                document.write(i + " * " + j + " = " + (i * j) + "<br>");
+            }
+            document.write("<br>");
+        }
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

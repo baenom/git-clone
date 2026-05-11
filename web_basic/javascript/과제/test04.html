@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        document.write("< 100-200 숫자 중 자리수가 4이고, 6의 배수 출력 ><br>");
+        var total = 0;
+        for (var i = 100; i <= 200; i++) {
+            var n100 = parseInt(i / 100);  
+            var n10 = parseInt((i % 100) / 10); 
+            var n1 = i % 10;              
+
+            if ((n100 == 4 || n10 == 4 || n1 == 4) && (i % 6 == 0)) {
+                document.write(i + " ");
+                total++;
+            }
+        }
+        document.write("<br>총 개수 : " + total + "개");
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

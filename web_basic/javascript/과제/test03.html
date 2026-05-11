@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        document.write("< 1 - 50 숫자중 십의 자리 짝수면서 일의 자리 홀수고, 3의 배수인 숫자 출력><br>");
+        var total = 0;
+        for (var i = 10; i <= 50; i++) {
+            var ten = parseInt(i / 10);
+            var one = i % 10;     
+
+            if (ten % 2 == 0 && one % 2 != 0 && i % 3 == 0) {
+                document.write(i + " ");
+                total++;
+            }
+        }
+        document.write("<br>총 개수 : " + total + "개");
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

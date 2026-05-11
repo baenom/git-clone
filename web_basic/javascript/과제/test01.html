@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        var num = prompt("1-50사이의 정수를 입력하세요 : ");
+        num = Number(num);
+
+        document.write("<1 ~ " + num + " 사이의 정수값을 한라인에 5개씩 출력하기><br>");
+        for (var i = 1; i <= num; i++) {
+            document.write(i + " ");
+            if (i % 5 == 0) {
+                document.write("<br>");
+            }
+        }
+
+        document.write("<br>< " + num + "의 약수 출력><br>");
+        var count = 0;
+        for (var i = 1; i <= num; i++) {
+            if (num % i == 0) {
+                document.write(i + " ");
+                count++;
+            }
+        }
+        document.write("<br>약수의 총개수 : " + count + "개");
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

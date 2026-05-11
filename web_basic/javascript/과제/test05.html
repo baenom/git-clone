@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        var chul = 90, young = 60, min = 45;
+        var time = 0;
+        while (true) {
+            time++;
+            if (time % chul == 0 && time % young == 0 && time % min == 0) {
+                break;
+            }
+        }
+
+        var totalMin = parseInt(time / 60);
+
+        document.write("<운동장 한바퀴 도는 소요시간><br>");
+        document.write("철수 : 90초 / 영희 : 60초 / 민수 : 45초<br><hr>");
+        document.write("8시 출발 후 다시 출발점에서 만나는 시간 : 8시 " + totalMin + "분<br>");
+        document.write("8시 " + totalMin + "분에 철수는 총 " + (time / chul) + "바퀴를 돌았음<br>");
+        document.write("8시 " + totalMin + "분에 영희는 총 " + (time / young) + "바퀴를 돌았음<br>");
+        document.write("8시 " + totalMin + "분에 민수는 총 " + (time / min) + "바퀴를 돌았음");
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
