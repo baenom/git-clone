@@ -6,7 +6,7 @@ DROP TABLE cinema;
 CREATE TABLE cinema (
     cinema_number    NUMBER          PRIMARY KEY,
     cinema_name    VARCHAR2(100)   NOT NULL,
-    location        VARCHAR2(100)
+    cinema_location        VARCHAR2(100)
 );
 CREATE TABLE theater (
     cinema_number    NUMBER,
@@ -95,59 +95,59 @@ JOIN customer c   ON r.customer_number   = c.customer_number
 ORDER BY r.movie_date, t.cinema_number;
 
 
--- (문제1)
+-- 1) 영화 가격이 9,000원 이상인 상영관의 극장번호를 추출하시오
 SELECT cinema_number 
 FROM theater 
 WHERE price >= 9000;
--- (문제2)
+-- 2)극장별 상영관(두 테이블 조인)
 SELECT * 
 FROM cinema,theater 
 WHERE cinema.cinema_number = theater.cinema_number;
--- (문제3)
+-- 3)영화 가격이 10,000원 이상인 영화를 상영하는 극장이름
 SELECT DISTINCT t.cinema_name 
 FROM cinema t 
 JOIN theater s 
 ON t.cinema_number = s.cinema_number 
 WHERE s.price >= 10000;
--- (문제4)
+-- 4)예약 날짜가 2024년 1월 1일 이후인 고객 정보와 예약 내용-- (예약이 없는 고객도 포함 → LEFT OUTER JOIN)
 SELECT c.customer_number, c.customer_name, c.customer_address, r.cinema_number, r.theater_number, r.number_of_seats, r.movie_date 
 FROM customer c 
 LEFT OUTER JOIN reservation r 
 ON c.customer_number = r.customer_number 
 AND r.movie_date > TO_DATE('2024-01-01','YYYY-MM-DD');
--- (문제5)
+-- 5) 강남에 있는 모든 극장을 예약한 고객의 이름과 극장번호를 출력
 SELECT c.customer_name, r.cinema_number
 FROM customer c
 JOIN reservation r ON c.customer_number = r.customer_number
-WHERE r.cinema_number IN (SELECT cinema_number FROM cinema WHERE location = '강남')
+WHERE r.cinema_number IN (SELECT cinema_number FROM cinema WHERE cinema_location = '강남')
 AND c.customer_number IN (
     SELECT r2.customer_number
     FROM reservation r2
-    WHERE r2.cinema_number IN (SELECT cinema_number FROM cinema WHERE location = '강남')
+    WHERE r2.cinema_number IN (SELECT cinema_number FROM cinema WHERE cinema_location = '강남')
     GROUP BY r2.customer_number
-    HAVING COUNT(DISTINCT r2.cinema_number) = (SELECT COUNT(*) FROM cinema WHERE location = '강남')
+    HAVING COUNT(DISTINCT r2.cinema_number) = (SELECT COUNT(*) FROM cinema WHERE cinema_location = '강남')
 );
--- (문제6)
-SELECT cinema_name, located 
+-- 1) 극장테이블에서 극장이름, 위치를 추출하시오
+SELECT cinema_name, cinema_location 
 FROM cinema;
--- (문제7)
+-- 2) 영화 가격이 10000이하인 영화제목을 추출하시오
 SELECT movie_name 
 FROM theater 
 WHERE price <= 10000;
--- (문제8)
+-- 3) 고객테이블에서 이름,주소를 추출하시오
 SELECT customer_name, customer_address 
 FROM customer;
---(문제9)
+--4) 극장 위치가 강남인 곳에서 상영 중인 영화제목을 추출하시오
 SELECT s.movie_name 
 FROM cinema t 
 JOIN theater s 
 ON t.cinema_number = s.cinema_number
-WHERE t.located = '강남';
--- (문제10)
+WHERE t.cinema_location = '강남';
+-- 5)강남에 위치한 극장을 모두 예약한 고객 이름
 SELECT c.customer_name 
 FROM customer c 
 WHERE NOT EXISTS(SELECT t.cinema_number FROM cinema t WHERE 
-t.located ='강남' 
+t.cinema_location ='강남' 
 MINUS
 SELECT r.cinema_number FROM reservation r 
 WHERE r.customer_number = c.customer_number);
@@ -156,9 +156,9 @@ WHERE r.customer_number = c.customer_number);
 
 
 -- 1. 극장테이블에서 극장이름, 위치를 추출하시오
-SELECT cinema_name, located FROM cinema;
+SELECT cinema_name, cinema_location FROM cinema;
 -- 2. 극장 테이블에서 위치가 '서울'인 극장의 극장이름을 조회하시오.
-SELECT cinema_name FROM cinema WHERE located = '서울';
+SELECT cinema_name FROM cinema WHERE cinema_location = '서울';
 -- 3. 상영관 테이블에서 가격이 10000원 이상인 상영관의 극장번호, 상영관번호, 영화제목을 조
 -- 회하시오.
 SELECT cinema_number, theater_number, movie_name FROM theater WHERE price >= 10000;
@@ -189,25 +189,25 @@ JOIN reservation r ON t.cinema_number = r.cinema_number AND t.theater_number = r
 SELECT c.customer_name, r.movie_date 
 FROM customer c JOIN reservation r ON c.customer_number = r.customer_number;
 -- 14. 극장, 상영관, 예약, 고객 테이블을 모두 조인하여 극장이름, 영화제목, 고객이름, 좌석번호를 조회하시오.
-SELECT ci.cinema_name, t.movie_name, cu.customer_name, r.seat_number 
+SELECT ci.cinema_name, t.movie_name, cu.customer_name, r.number_of_seats 
 FROM cinema ci
 JOIN theater t ON ci.cinema_number = t.cinema_number
 JOIN reservation r ON t.cinema_number = r.cinema_number AND t.theater_number = r.theater_number
 JOIN customer cu ON r.customer_number = cu.customer_number;
 -- 15. 상영관과 예약 테이블을 조인하여 영화제목별 총 예약 수를 조회하시오.
-SELECT t.movie_name, COUNT(r.reservation_number) as total_reservations
+SELECT t.movie_name, COUNT(r.customer_number) as total_reservations
 FROM theater t LEFT JOIN reservation r ON t.cinema_number = r.cinema_number AND t.theater_number = r.theater_number
 GROUP BY t.movie_name;
 -- 16. 극장과 상영관 테이블을 조인하여 위치가 '서울'인 극장에서 상영 중인 영화제목과 가격을 조회하시오.
 SELECT t.movie_name, t.price 
 FROM cinema c JOIN theater t ON c.cinema_number = t.cinema_number 
-WHERE c.location = '서울';
+WHERE c.cinema_location = '서울';
 -- 17. 고객과 예약 테이블을 LEFT JOIN하여 예약이 한 건도 없는 고객의 이름을 조회하시오.
 SELECT c.customer_name 
 FROM customer c LEFT JOIN reservation r ON c.customer_number = r.customer_number 
-WHERE r.reservation_number IS NULL;
+WHERE r.customer_number IS NULL;
 -- 18. 극장, 상영관, 예약 테이블을 조인하여 극장별 총 예약 수를 조회하시오.
-SELECT c.cinema_name, COUNT(r.reservation_number) 
+SELECT c.cinema_name, COUNT(r.customer_number) 
 FROM cinema c 
 LEFT JOIN reservation r ON c.cinema_number = r.cinema_number 
 GROUP BY c.cinema_name;
@@ -216,7 +216,7 @@ SELECT r.customer_number, t.movie_name
 FROM theater t JOIN reservation r ON t.cinema_number = r.cinema_number AND t.theater_number = r.theater_number 
 WHERE t.price >= 15000;
 -- 20. 극장, 상영관, 예약, 고객 테이블을 조인하여 고객별 총 예약 횟수와 이름을 조회하시오.
-SELECT c.customer_name, COUNT(r.reservation_number) 
+SELECT c.customer_name, COUNT(r.customer_number) 
 FROM customer c LEFT JOIN reservation r ON c.customer_number = r.customer_number 
 GROUP BY c.customer_name, c.customer_number;
 -- 21. 예약 테이블에서 가장 많은 예약이 발생한 극장번호를 조회하시오.
@@ -265,9 +265,9 @@ WHERE t1.price > (SELECT AVG(t2.price) FROM theater t2 WHERE t2.cinema_number = 
 -- 33. 극장 테이블에서 해당 극장에 예약된 건수가 5건 이상인 극장의 극장이름을 조회하시오.
 SELECT cinema_name FROM cinema c 
 WHERE (SELECT COUNT(*) FROM reservation r WHERE r.cinema_number = c.cinema_number) >= 5;
--- 34. 예약한 좌석번호가 'A1'인 기록이 존재하는 고객의 이름을 조회하시오.
+-- 34. 예약한 좌석번호가 'A1'인 기록이 존재하는 고객의 이름을 조회하시오. A1이 없고 다 숫자로만 저장되어 있어서 15로 문제를 바꿔서 사용하겠습니다
 SELECT customer_name FROM customer c 
-WHERE EXISTS (SELECT 1 FROM reservation r WHERE r.customer_number = c.customer_number AND r.seat_number = 'A1');
+WHERE EXISTS (SELECT 1 FROM reservation r WHERE r.customer_number = c.customer_number AND r.number_of_seats = 15);
 -- 35. 상영관 테이블에서 해당 상영관에 예약된 기록이 하나도 없는 상영관의 영화제목을 조회하시오. (NOT EXISTS 사용)
 SELECT t.movie_name FROM theater t 
 WHERE NOT EXISTS (SELECT 1 FROM reservation r WHERE r.cinema_number = t.cinema_number AND r.theater_number = t.theater_number);
