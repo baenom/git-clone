@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let todo = function(){
+            alert('3')
+        }
+        setTimeout(todo,3000)
+        setTimeout(function(){
+            alert('쉬는시간 끝')
+        },5000)
+        let pId = setInterval(function(){
+            document.write(new Date() + '<br>')
+        },1000)
+        setTimeout(function(){
+            clearInterval(pId)
+        },10000)
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
