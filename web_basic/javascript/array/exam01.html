@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let arr = [10,20,12.34,'abc',true]
+
+        arr[arr.length] = 'hello'
+        arr.push('good')
+        arr[10] = 'hello'
+
+        document.write(`arr : ${arr}<br>`)
+
+        for(let i = 0; i < arr.length; i++){
+            document.write(`${i}번째 데이터 : ${arr[i]}<br>`)
+        }
+        document.write('<hr>')
+        for(let i in arr){
+            document.write(`${i}번째 데이터 : ${arr[i]}<br>`)
+        }
+
+        for(let data of arr){
+            document.write(data + '<br>')
+        }
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

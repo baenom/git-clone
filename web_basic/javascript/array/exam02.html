@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let arr = [2,5,12,7,34,7,21,3]
+
+        document.write(arr + '<br>')
+
+        arr.sort()
+        document.write(`일반 sort : ${arr}<br>` )
+
+        arr.sort(function(left,right){
+            return left- right
+        })
+        document.write(`오름차순 sort : ${arr}<br>` )
+        arr.sort(function(left,right){
+            return right-left
+        })
+        document.write(`내림차순 sort : ${arr}<br>` )
+
+        let states = []
+        states['성수'] = '서울특별시'
+        states['성남'] = '경기도'
+        states['부천'] = '인천 광역시'
+
+        for(let i in states){
+            document.write(`${i} : ${states[i]}<br>`)
+        }
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
