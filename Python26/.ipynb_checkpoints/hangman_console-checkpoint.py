@@ -7,11 +7,8 @@ word_list = ['apple','banana','man','woman','tomato']
 hangman = Hangman(word_list)
 print(hangman.display_word, f"{len(hangman.word)}")
 while True:
+    hangman.num_try += 1
     letter = input('>> 알파벳 입력 : ')
-    # if not letter.isalpha():
-    #     print('알파벳을 입력하세요')
-    #     continue
-
     resurt = hangman.check_letter(letter)
     if resurt == Hangman.RIGHT:
         print(f"정답 : {hangman.display_word}")
@@ -19,8 +16,7 @@ while True:
         
         print(f"오답 : {hangman.num_try}의 시도")
     else:
-        print(hangman.error_status)
-        continue
+        pass
 
     resurt = hangman.is_win()
     if resurt == Hangman.WIN:
