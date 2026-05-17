@@ -79,14 +79,23 @@ while True:
         name = input("이름: ")
         phone = input("전화번호: ")
         address = input("주소: ")
+        if not user_id.strip() or not password.strip():
+            print("아이디와 비밀번호는 필수 입력 항목입니다.")
+            continue
         member_service.join(user_id, password, name, phone, address)
 
     elif choice == '2':
-        member_service.get_all_members()
+        if not member_service.members:
+            print("등록된 회원이 없습니다.")
+        else:
+            member_service.get_all_members()
 
     elif choice == '3':
-        member_number = int(input("회원 번호: "))
-        member_service.get_member_deta(member_number)
+        try:
+            member_number = int(input("회원 번호: "))
+            member_service.get_member_deta(member_number)
+        except ValueError:
+            print("회원 번호는 숫자만 입력 가능합니다.")
 
     elif choice == '4':
         user_id = input("회원 아이디: ")
@@ -97,7 +106,7 @@ while True:
                 new_phone = input("새 전화번호: ")
                 new_password = input("새 비밀번호: ")
                 new_address = input("새 주소: ")
-                member_service.update_member(member_number, new_name, new_phone, new_password, new_address)
+                member_service.update_member(i.member_number, new_name, new_phone, new_password, new_address)
                 break
         else:
             print("회원 정보가 일치하지 않습니다.")
