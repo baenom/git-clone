@@ -1,10 +1,22 @@
-from hangman import Hangman 
+from hangman import Hangman
 print()
 print('==============hangman ============')
-word_list = ['apple','banana','man','woman','tomato']
 
+# word_list = ['apple','banana','man','woman','tomato']
 
-hangman = Hangman(word_list)
+filename = 'hangman/voca.txt'
+
+def random_choice(filename):
+    word_list = []
+    with open(filename, encoding='utf-8') as f_read:
+        for i in f_read:
+            words = i.split()
+            if words:
+                word_list.append(words[0])
+    return word_list
+
+hangman = Hangman(random_choice(filename))
+
 print(hangman.display_word, f"{len(hangman.word)}")
 while True:
     letter = input('>> 알파벳 입력 : ')
